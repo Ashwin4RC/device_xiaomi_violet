@@ -133,6 +133,10 @@ BOARD_PLAT_PUBLIC_SEPOLICY_DIR += \
 # Treble
 TARGET_PRODUCT_PROP += $(DEVICE_PATH)/product.prop
 
+# Vendor init
+TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_violet
+TARGET_RECOVERY_DEVICE_MODULES := libinit_violet
+
 # Verified Boot
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flag 2
