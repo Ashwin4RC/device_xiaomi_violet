@@ -7,9 +7,6 @@
 # Get non-open-source specific aspects
 $(call inherit-product-if-exists, vendor/xiaomi/violet/violet-vendor.mk)
 
-# GoogleCamera
-$(call inherit-product-if-exists, packages/apps/GoogleCamera/gcam.mk)
-
 PRODUCT_CHARACTERISTICS := nosdcard
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
@@ -17,7 +14,7 @@ PRODUCT_ENFORCE_RRO_TARGETS := *
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-pe
+    $(LOCAL_PATH)/overlay-potato
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
@@ -43,6 +40,11 @@ PRODUCT_PACKAGES += \
     qti-telephony-utils \
     qti_telephony_utils.xml
 
+# Namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH) \
+    device/xiaomi/violet-firmware
+
 # Net
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0
@@ -61,8 +63,7 @@ PRODUCT_PACKAGES += \
 
 # AOT Preload
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-    SystemUI \
-    NexusLauncherRelease
+    SystemUI
 
 # Telephony
 PRODUCT_PACKAGES += \
@@ -74,7 +75,3 @@ PRODUCT_BOOT_JARS += \
 # TextClassifier
 PRODUCT_PACKAGES += \
     textclassifier.bundle1
-
-# Wallpapers
-PRODUCT_PACKAGES += \
-    PixelLiveWallpaperPrebuilt

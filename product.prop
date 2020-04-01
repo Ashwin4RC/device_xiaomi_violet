@@ -82,3 +82,5 @@ persist.bluetooth.bqr.event_mask=14
 # BQR minimum report interval configuration
 persist.bluetooth.bqr.min_interval_ms=500
 
+# Notch
+ro.potato.has_cutout=true
