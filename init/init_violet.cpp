@@ -27,6 +27,7 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/sysinfo.h>
 #include <stdlib.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
@@ -62,6 +63,36 @@ void property_override_triple(char const bootimg_prop[], char const odm_prop[], 
     property_override(system_prop, value);
 }
 
+void load_6gb()
+{
+    property_override("dalvik.vm.heapstartsize","16m");
+    property_override("dalvik.vm.heapgrowthlimit","256m");
+    property_override("dalvik.vm.heaptargetutilization","0.5");
+    property_override("dalvik.vm.heapmaxfree","32m");
+}
+
+void load_4gb()
+{
+    property_override("dalvik.vm.heapstartsize","8m");
+    property_override("dalvik.vm.heapgrowthlimit","192m");
+    property_override("dalvik.vm.heaptargetutilization","0.6");
+    property_override("dalvik.vm.heapmaxfree","16m");
+}
+
+/* Get Ram size for different variants */
+void checkram_loadprops()
+{
+    struct sysinfo sys;
+    sysinfo(&sys);
+    if(sys.totalram > 4096ull * 1024 * 1024){
+        load_6gb();
+    }
+    else if(sys.totalram > 3072ull * 1024 * 1024){
+        load_4gb();
+    }
+
+}
+
 void vendor_load_properties()
 {
     // fingerprint
@@ -69,4 +100,5 @@ void vendor_load_properties()
     property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
     property_override_triple("ro.bootimage.build.fingerprint", "ro.odm.build.fingerprint",
     "ro.system.build.fingerprint", "google/flame/flame:10/QQ2A.200305.003/6156912:user/release-keys");
+    checkram_loadprops();
 }
