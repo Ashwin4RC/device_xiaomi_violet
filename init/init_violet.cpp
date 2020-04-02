@@ -48,11 +48,18 @@ void property_override(char const prop[], char const value[])
         __system_property_add(prop, strlen(prop), value, strlen(value));
 }
 
-void property_override_dual(char const system_prop[], char const vendor_prop[],
+void property_override_dual(char const product_prop[], char const vendor_prop[],
     char const value[])
 {
-    property_override(system_prop, value);
+    property_override(product_prop, value);
     property_override(vendor_prop, value);
+}
+
+void property_override_triple(char const bootimg_prop[], char const odm_prop[], char const system_prop[], char const value[])
+{
+    property_override(bootimg_prop, value);
+    property_override(odm_prop, value);
+    property_override(system_prop, value);
 }
 
 void vendor_load_properties()
@@ -60,4 +67,6 @@ void vendor_load_properties()
     // fingerprint
     property_override("ro.build.description", "violet-user 9 PKQ1.181203.001 V10.3.9.0.PFHINXM release-keys");
     property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
+    property_override_triple("ro.bootimage.build.fingerprint", "ro.odm.build.fingerprint",
+    "ro.system.build.fingerprint", "google/flame/flame:10/QQ2A.200305.003/6156912:user/release-keys");
 }
