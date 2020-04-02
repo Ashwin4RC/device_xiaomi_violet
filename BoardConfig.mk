@@ -40,18 +40,19 @@ BOARD_KERNEL_CMDLINE += service_locator.enable=1
 BOARD_KERNEL_CMDLINE += androidboot.memcg=1
 BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x880000
 BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3 swiotlb=1
-
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
-
-# Prebuilt Kernel
-TARGET_KERNEL_ARCH := arm64
+BOARD_KERNEL_OFFSET := 0x00008000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_RAMDISK_OFFSET := 0x01000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-TARGET_PREBUILT_KERNEL := device/xiaomi/violet-kernel/Image.gz-dtb
-
-# DTBO partition definitions
-BOARD_PREBUILT_DTBOIMAGE := device/xiaomi/violet-kernel/dtbo-violet.img
+BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_DTBOIMG_PARTITION_SIZE := 8388608
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_SOURCE := kernel/xiaomi/sm6150
+TARGET_KERNEL_CONFIG := vendor/violet-perf_defconfig
+TARGET_COMPILE_WITH_MSM_KERNEL := true
 
 # Enable stats logging in LMKD
 TARGET_LMKD_STATS_LOG := true
