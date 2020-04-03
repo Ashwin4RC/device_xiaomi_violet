@@ -131,8 +131,9 @@ BOARD_PLAT_PUBLIC_SEPOLICY_DIR += \
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flag 2
 
-# VNDK
+# Treble
 BOARD_VNDK_VERSION := current
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # Inherit from the proprietary version
 -include vendor/xiaomi/violet/BoardConfigVendor.mk
